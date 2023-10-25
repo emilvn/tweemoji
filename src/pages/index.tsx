@@ -79,7 +79,6 @@ export function CreatePostWizard(){
                 onChange={(e) => setInput(e.target.value)}
                 disabled={isPosting}
                 onKeyDown={(e) => {
-                    e.preventDefault();
                     if(e.key === "Enter"){
                         if(input !== "") createPost({content: input});
                     }
