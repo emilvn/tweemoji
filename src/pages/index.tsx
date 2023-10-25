@@ -6,7 +6,7 @@ import {api, type RouterOutputs} from "~/utils/api";
 
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import {LoadingPage} from "~/components/loading";
+import {LoadingPage, LoadingSpinner} from "~/components/loading";
 import {useState} from "react";
 import toast from "react-hot-toast";
 dayjs.extend(relativeTime);
@@ -78,14 +78,23 @@ export function CreatePostWizard(){
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 disabled={isPosting}
-            />
-            <button
-                className="bg-slate-500 text-white rounded-md px-4 py-2"
-                onClick={() => {
-                    createPost({content: input});
-                    setInput("");
+                onKeyDown={(e) => {
+                    e.preventDefault();
+                    if(e.key === "Enter"){
+                        if(input !== "") createPost({content: input});
+                    }
                 }}
-            >Post</button>
+            />
+            {input !== "" && !isPosting && (
+                <button
+                    className="bg-slate-500 text-white rounded-md px-4 py-2"
+                    onClick={() => createPost({content: input})}>Post</button>
+            )}
+            {isPosting && (
+                <div className="flex items-center justify-center">
+                    <LoadingSpinner size={20}/>
+                </div>
+            )}
         </div>
     );
 }
