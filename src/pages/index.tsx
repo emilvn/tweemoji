@@ -7,6 +7,7 @@ import {api, type RouterOutputs} from "~/utils/api";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import {LoadingPage} from "~/components/loading";
+import {useState} from "react";
 dayjs.extend(relativeTime);
 
 type PostWithAuthor = RouterOutputs["posts"]["getAll"][number];
@@ -38,6 +39,17 @@ export function PostView(props:PostWithAuthor){
 export function CreatePostWizard(){
     const {user} = useUser();
 
+    const [input, setInput] = useState("");
+
+    const ctx = api.useContext();
+
+    const {mutate:createPost, isLoading:isPosting} = api.posts.create.useMutation({
+        onSuccess: () => {
+            setInput("");
+            void ctx.posts.getAll.invalidate();
+        }
+    });
+
     if(!user) return null;
 
     return (
@@ -52,7 +64,18 @@ export function CreatePostWizard(){
             <input
                 placeholder="Type some emojis!"
                 className="bg-transparent grow outline-none"
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                disabled={isPosting}
             />
+            <button
+                className="bg-slate-500 text-white rounded-md px-4 py-2"
+                onClick={() => {
+                    createPost({content: input});
+                    setInput("");
+                }}
+            >Post</button>
         </div>
     );
 }
@@ -66,7 +89,7 @@ function Feed(){
 
     return (
         <div className="flex flex-col">
-            {[...data, ...data]?.map((fullPost) => (
+            {data?.map((fullPost) => (
                 <PostView {...fullPost} key={fullPost.post.id}/>
             ))}
         </div>
