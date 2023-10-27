@@ -1,18 +1,16 @@
-import {SignInButton, useUser} from "@clerk/nextjs";
+import {useState} from "react";
+
 import Image from "next/image";
+import {type NextPage} from "next";
+
+import {SignInButton, useUser} from "@clerk/nextjs";
+import toast from "react-hot-toast";
 
 import {api} from "~/utils/api";
 
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
 import {LoadingPage, LoadingSpinner} from "~/components/loading";
-import {useState} from "react";
-import toast from "react-hot-toast";
-import {type NextPage} from "next";
 import {PageLayout} from "~/components/layout";
 import PostView from "~/components/postview";
-
-dayjs.extend(relativeTime);
 
 export function CreatePostWizard(){
     const {user} = useUser();
