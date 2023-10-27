@@ -11,6 +11,7 @@ import {api} from "~/utils/api";
 import {LoadingPage, LoadingSpinner} from "~/components/loading";
 import {PageLayout} from "~/components/layout";
 import PostView from "~/components/postview";
+import LoginPage from "~/pages/login";
 
 export function CreatePostWizard(){
     const {user} = useUser();
@@ -100,17 +101,17 @@ const Home:NextPage = () => {
     if(!userLoaded) return (<div />);
 
     return (
-        <PageLayout>
-			<div className="flex border-b border-slate-400 p-4">
-				{!isSignedIn && (
-					<div className="flex justify-center">
-						<SignInButton mode={"modal"} />
-					</div>
-				)}
-				{!!isSignedIn && <CreatePostWizard />}
-			</div>
-    	<Feed />
-		</PageLayout>
+        <>
+            {!isSignedIn && <LoginPage/>}
+            {!!isSignedIn && (
+                <PageLayout>
+			        <div className="flex border-b border-slate-400 p-4">
+                        <CreatePostWizard />
+			        </div>
+    	            <Feed />
+                </PageLayout>
+            )}
+    </>
 	);
 }
 
