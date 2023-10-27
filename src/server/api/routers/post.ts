@@ -67,4 +67,30 @@ export const postRouter = createTRPCRouter({
             }
         });
     }),
+
+    getPostsByUser: publicProcedure
+        .input(z.object({
+            userId: z.string(),
+        }))
+        .query(async ({ctx, input}) => {
+
+            const posts = await ctx.db.post.findMany({
+                where: {
+                    authorId: input.userId
+                },
+                take: 100,
+                orderBy: {
+                    createdAt: "desc"
+                }
+            });
+            const author = await clerkClient.users.getUser(input.userId);
+            return posts.map((post) => {
+                if(!author || !author.username)
+                    throw new TRPCError({
+                        code: "INTERNAL_SERVER_ERROR",
+                        message: "User not found"
+                    });
+                return {post, author}
+            });
+    }),
 });

@@ -4,20 +4,22 @@ import {api} from "~/utils/api";
 import Image from "next/image";
 
 const ProfilePage:NextPage<{ username:string }> = ({username}) => {
-	const {data} = api.profile.getUserByUsername.useQuery({username});
+	const {data: user} = api.profile.getUserByUsername.useQuery({username});
 
-	if(!data) return <div>404 Not Found</div>;
+	if(!user) return <div>404 Not Found</div>;
+
+	const {data:posts, isLoading:postsLoading} = api.posts.getPostsByUser.useQuery({userId: user.id ?? ""});
 
     return (
         <>
             <Head>
-                <title>{data.username}</title>
+                <title>{user.username}</title>
             </Head>
             <PageLayout>
 				<div className="bg-slate-600 h-36 relative">
                 	<Image
-						src={data.imageUrl}
-						alt={`${data.username ?? ""}'s profile picture`}
+						src={user.imageUrl}
+						alt={`${user.username ?? ""}'s profile picture`}
 						width={128}
 						height={128}
 						className="-mb-[64px] absolute bottom-0 left-0 ml-4
@@ -26,9 +28,16 @@ const ProfilePage:NextPage<{ username:string }> = ({username}) => {
 				</div>
 				<div className="h-[64px]"></div>
 				<div className="p-4 text-2xl font-bold">
-					{`@${data.username ?? ""}`}
+					{`@${user.username ?? ""}`}
 				</div>
-				<div className="border-b border-slate-400 w-full"></div>
+				<div className="border-b border-t border-slate-400 w-full">
+					{postsLoading &&
+						<div className="flex justify-center p-4">
+							<LoadingSpinner size={60}/>
+						</div>
+					}
+					{posts && posts.map((post) => <PostView {...post} key={post.post.id}/>)}
+				</div>
 			</PageLayout>
         </>
     );
@@ -40,6 +49,8 @@ import {TRPCError} from "@trpc/server";
 import { createServerSideHelpers } from '@trpc/react-query/server';
 import superjson from 'superjson';
 import {PageLayout} from "~/components/layout";
+import {PostView} from "~/pages/index";
+import {LoadingPage, LoadingSpinner} from "~/components/loading";
 
 export const getStaticProps:GetStaticProps = async (ctx) => {
 	const helpers = createServerSideHelpers({
