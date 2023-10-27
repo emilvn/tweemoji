@@ -1,5 +1,5 @@
 import { z } from "zod";
-import {createTRPCRouter, privateProcedure, publicProcedure} from "~/server/api/trpc";
+import {createTRPCRouter, publicProcedure} from "~/server/api/trpc";
 import {clerkClient} from "@clerk/nextjs";
 import {TRPCError} from "@trpc/server";
 import filterUserForClient from "~/server/helpers/filterUserForClient";

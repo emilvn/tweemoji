@@ -2,6 +2,9 @@ import Head from "next/head";
 import type {GetStaticProps, NextPage} from "next";
 import {api} from "~/utils/api";
 import Image from "next/image";
+import PostView from "~/components/postview";
+import {PageLayout} from "~/components/layout";
+import {LoadingSpinner} from "~/components/loading";
 
 const ProfilePage:NextPage<{ username:string }> = ({username}) => {
 	const {data: user} = api.profile.getUserByUsername.useQuery({username});
@@ -48,9 +51,6 @@ import {db} from "~/server/db";
 import {TRPCError} from "@trpc/server";
 import { createServerSideHelpers } from '@trpc/react-query/server';
 import superjson from 'superjson';
-import {PageLayout} from "~/components/layout";
-import {PostView} from "~/pages/index";
-import {LoadingPage, LoadingSpinner} from "~/components/loading";
 
 export const getStaticProps:GetStaticProps = async (ctx) => {
 	const helpers = createServerSideHelpers({
