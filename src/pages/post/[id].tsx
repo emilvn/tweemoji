@@ -1,8 +1,11 @@
 import Head from "next/head";
 import type {GetStaticProps, NextPage} from "next";
-import {LoadingPage} from "~/components/loading";
+
 import {api} from "~/utils/api";
+
+import {LoadingPage} from "~/components/loading";
 import {PageLayout} from "~/components/layout";
+import PostView from "~/components/postview";
 
 const SinglePostPage:NextPage<{id: string}> = ({id}) => {
     const {data, isLoading} = api.posts.getPostById.useQuery({id});
@@ -14,7 +17,7 @@ const SinglePostPage:NextPage<{id: string}> = ({id}) => {
     return (
         <>
             <Head>
-                <title>Post</title>
+                <title>{`${data.post.content} - ${data.author.username}`}</title>
             </Head>
             <PageLayout>
                 <PostView {...data}/>
@@ -23,23 +26,17 @@ const SinglePostPage:NextPage<{id: string}> = ({id}) => {
     );
 }
 
-import {appRouter} from "~/server/api/root";
-import {db} from "~/server/db";
 import {TRPCError} from "@trpc/server";
-import { createServerSideHelpers } from '@trpc/react-query/server';
-import superjson from 'superjson';
-import PostView from "~/components/postview";
+import {generateSSGHelpers} from "~/server/helpers/generateSSGHelpers";
 
-export const getStaticProps:GetStaticProps = (ctx) => {
-    const helpers = createServerSideHelpers({
-        router: appRouter,
-        ctx: {db, userId: null},
-        transformer: superjson, // optional - adds superjson serialization
-    });
+export const getStaticProps:GetStaticProps = async (ctx) => {
+    const helpers = generateSSGHelpers();
 
     const id = ctx.params?.id;
 
     if(typeof id !== "string") throw new TRPCError({code: "NOT_FOUND", message: "Not Found"});
+
+    await helpers.posts.getPostById.prefetch({id});
 
     return {
         props:{
@@ -55,6 +52,5 @@ export const getStaticPaths = () => {
         fallback: "blocking",
     }
 };
-
 
 export default SinglePostPage;

@@ -56,18 +56,11 @@ const ProfilePage:NextPage<{ username:string }> = ({username}) => {
     );
 }
 
-import {appRouter} from "~/server/api/root";
-import {db} from "~/server/db";
 import {TRPCError} from "@trpc/server";
-import { createServerSideHelpers } from '@trpc/react-query/server';
-import superjson from 'superjson';
+import {generateSSGHelpers} from "~/server/helpers/generateSSGHelpers";
 
 export const getStaticProps:GetStaticProps = async (ctx) => {
-	const helpers = createServerSideHelpers({
-		router: appRouter,
-		ctx: {db, userId: null},
-		transformer: superjson, // optional - adds superjson serialization
-	});
+	const helpers = generateSSGHelpers();
 
 	const slug = ctx.params?.slug;
 
