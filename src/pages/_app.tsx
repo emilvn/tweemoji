@@ -9,7 +9,7 @@ import Head from "next/head";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
     return (
-        <ClerkProvider {...pageProps}>
+        <ClerkProvider {...pageProps} >
 			<Head>
 				<title>Tweemoji</title>
 				<meta name="description" content="💭" />

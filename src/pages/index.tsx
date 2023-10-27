@@ -90,7 +90,7 @@ function Feed(){
 }
 
 const Home:NextPage = () => {
-
+    console.log("rendering home");
     const {isLoaded:userLoaded, isSignedIn} = useUser();
 
     // start fetching ASAP
@@ -104,14 +104,14 @@ const Home:NextPage = () => {
 			<div className="flex border-b border-slate-400 p-4">
 				{!isSignedIn && (
 					<div className="flex justify-center">
-						<SignInButton />
+						<SignInButton mode={"modal"} />
 					</div>
 				)}
 				{!!isSignedIn && <CreatePostWizard />}
 			</div>
     	<Feed />
 		</PageLayout>
-);
+	);
 }
 
 export default Home;

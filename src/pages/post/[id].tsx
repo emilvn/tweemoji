@@ -9,7 +9,7 @@ const SinglePostPage:NextPage<{id: string}> = ({id}) => {
 
     if(isLoading) return <LoadingPage/>;
 
-    if(!data) return <div>404 Not Found</div>;
+    if(!data || !data.post) return <div>404 Not Found</div>;
 
     return (
         <>

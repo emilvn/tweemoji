@@ -7,6 +7,7 @@ import {TRPCError} from "@trpc/server";
 
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
+import type {Post} from "@prisma/client";
 
 // Create a new ratelimiter, that allows 3 requests per 1 minute
 const ratelimit = new Ratelimit({
@@ -14,6 +15,31 @@ const ratelimit = new Ratelimit({
     limiter: Ratelimit.slidingWindow(3, "1 m"),
     analytics: true
 });
+
+const addUserDataToPosts = async (posts:Post[]) => {
+    const users = (await clerkClient.users.getUserList({
+        userId: posts.map((post) => post.authorId),
+        limit: 100,
+    })).map(filterUserForClient);
+
+    return posts.map((post) => {
+       const author = users.find((user) => user.id === post.authorId);
+
+       if(!author || !author.username) throw new TRPCError({
+           code: "NOT_FOUND",
+              message: "Author not found"
+       });
+
+       return {
+           post,
+           author : {
+               ...author,
+               username: author.username
+           }
+       }
+    });
+
+}
 
 export const postRouter = createTRPCRouter({
     getAll: publicProcedure.query(async ({ctx}) => {
@@ -24,28 +50,7 @@ export const postRouter = createTRPCRouter({
             }
         });
 
-        const users = (
-            await clerkClient.users.getUserList({
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-                userId: posts.map((post) => post.authorId),
-                limit: 100,
-            })
-        ).map(filterUserForClient);
-
-        return posts.map((post) => {
-            const author = users.find((user) => user.id === post.authorId);
-
-            if(!author  || !author.username)
-                throw new TRPCError({
-                    code: "INTERNAL_SERVER_ERROR",
-                    message: "Author not found"
-                });
-
-            return {
-                post,
-                author
-            }
-        });
+        return addUserDataToPosts(posts);
     }),
 
     create: privateProcedure
@@ -83,15 +88,7 @@ export const postRouter = createTRPCRouter({
                     createdAt: "desc"
                 }
             });
-            const author = await clerkClient.users.getUser(input.userId);
-            return posts.map((post) => {
-                if(!author || !author.username)
-                    throw new TRPCError({
-                        code: "INTERNAL_SERVER_ERROR",
-                        message: "User not found"
-                    });
-                return {post, author}
-            });
+            return addUserDataToPosts(posts);
     }),
 
     getPostById: publicProcedure.input(z.object({
@@ -108,13 +105,6 @@ export const postRouter = createTRPCRouter({
             message: "Post not found"
         });
 
-        const author = await clerkClient.users.getUser(post.authorId);
-        if(!author || !author.username)
-            throw new TRPCError({
-                code: "INTERNAL_SERVER_ERROR",
-                message: "User not found"
-            });
-
-        return {post, author};
+        return (await addUserDataToPosts([post]))[0];
     }),
 });
