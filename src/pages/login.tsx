@@ -1,7 +1,5 @@
 import {SignInButton, SignUpButton} from "@clerk/nextjs";
 import Image from "next/image";
-import {FaGithub} from "react-icons/fa";
-
 
 const LoginPage = () => {
 	return (

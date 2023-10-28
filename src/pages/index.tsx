@@ -104,6 +104,7 @@ const Home:NextPage = () => {
         <>
             {!isSignedIn && <LoginPage/>}
             {!!isSignedIn && (
+
                 <PageLayout>
 			        <div className="flex border-b border-slate-400 p-4">
                         <CreatePostWizard />
