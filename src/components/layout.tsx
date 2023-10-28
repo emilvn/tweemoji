@@ -39,7 +39,7 @@ export const NavBar = () => {
 				</div>
 				<div>
 					<NavButton>
-						<UserButton/>
+						<UserButton afterSignOutUrl={"/"}/>
 					</NavButton>
 				</div>
 		</nav>
