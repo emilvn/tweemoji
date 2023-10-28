@@ -3,7 +3,7 @@ import {useState} from "react";
 import Image from "next/image";
 import {type NextPage} from "next";
 
-import {SignInButton, useUser} from "@clerk/nextjs";
+import {useUser} from "@clerk/nextjs";
 import toast from "react-hot-toast";
 
 import {api} from "~/utils/api";
