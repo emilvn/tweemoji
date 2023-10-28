@@ -18,7 +18,7 @@ export const NavBar = () => {
 	return (
 		<nav className="flex gap-4 p-4
 			border-slate-400 fixed
-			w-[84px] flex-col justify-start items-center border-none h-full"
+			w-[84px] flex-col justify-between items-center border-none h-full"
 		>
 				<div className="content-between flex flex-col">
 					<NavButton>
