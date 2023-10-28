@@ -12,6 +12,7 @@ import {LoadingPage, LoadingSpinner} from "~/components/loading";
 import {PageLayout} from "~/components/layout";
 import PostView from "~/components/postview";
 import LoginPage from "~/pages/login";
+import InputEmojiWithRef from "react-input-emoji";
 
 export function CreatePostWizard(){
     const {user} = useUser();
@@ -47,7 +48,7 @@ export function CreatePostWizard(){
                 width={56}
                 height={56}
             />
-            <input
+            {/*<input
                 placeholder="Type some emojis!"
                 className="bg-transparent grow outline-none"
                 type="text"
@@ -59,7 +60,15 @@ export function CreatePostWizard(){
                         if(input !== "") createPost({content: input});
                     }
                 }}
-            />
+            />*/}
+            <InputEmojiWithRef
+                value={input}
+                onChange={setInput}
+                cleanOnEnter={true}
+                keepOpened={true}
+                maxLength={280}
+                placeholder="Type some emojis!"
+                theme={"dark"}/>
             {input !== "" && !isPosting && (
                 <button
                     className="bg-slate-500 text-white rounded-md px-4 py-2"
