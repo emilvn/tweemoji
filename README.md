@@ -1,28 +1,77 @@
-# Create T3 App
+<h1 style="color: #38bdf8">Tweemoji</h1>
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+<div style="display: flex; align-items: center; justify-content: center">
+    <img alt="Tweemoji Logo" height="200" src="public/logo.png" width="200"/>
+</div>
 
-## What's next? How do I make an app with this?
+Welcome to Tweemoji, a unique social media platform where you can express yourself using only emojis. This repository contains the source code for Tweemoji, which is built using Next.js, TypeScript, Clerk, Prisma, and tRPC.
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+Visit the live website: [Tweemoji](https://tweemoji-two.vercel.app/)
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+## Table of Contents
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Getting Started](#getting-started)
+- [Configuration](#configuration)
+- [Usage](#usage)
 
-## Learn More
+## Features
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+- **Emoji-Only Posts**: Share your thoughts and feelings using emojis.
+- **User Authentication**: Sign up and log in using Clerk.
+- **Interactive Design**: A modern and user-friendly interface for an engaging experience.
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+## Technologies Used
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+- **[Next.js](https://nextjs.org)**: A React framework for building server-rendered React applications.
+- **[TypeScript](https://typescriptlang.org)**: A statically typed superset of JavaScript for improved code quality.
+- **[Clerk](https://clerk.dev)**: Handles user authentication and session management.
+- **[Prisma](https://prisma.io)**: An ORM for database interactions, used for data storage.
+- **[tRPC](https://trpc.io)**: For efficient data fetching and management.
+- **[Tailwind CSS](https://tailwindcss.com)**: A utility-first CSS framework for building custom and responsive user interfaces with ease.
 
-## How do I deploy this?
+## Getting Started
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+Follow these steps to get the Tweemoji project up and running on your local machine:
+
+1. **Clone the repository**:
+
+   ```bash
+   git clone https://github.com/yourusername/tweemoji.git
+   cd tweemoji
+   ```
+
+2. **Install dependencies**:
+
+   ```bash
+   npm install
+   ```
+
+3. **Run the development server**:
+
+   ```bash
+   npm run dev
+   ```
+
+4. **Open Tweemoji in your browser**:
+
+   Visit [http://localhost:3000](http://localhost:3000) to explore the app locally.
+
+## Configuration
+
+Tweemoji relies on a few environment variables for configuration. You should create a `.env.local` file in the project root and add the following variables:
+
+```
+CLERK_PUBLIC_API_KEY=your_clerk_public_key
+CLERK_FRONTEND_API_KEY=your_clerk_frontend_key
+DATABASE_URL=your_database_url
+```
+
+Ensure that you have the Clerk and database setups ready for a seamless experience.
+
+## Usage
+
+1. Sign in with your GitHub account on Tweemoji.
+2. Start posting emojis via the input at the top of the page.
+3. Explore posts from other users, and visit their profiles to see all the posts they have made.
