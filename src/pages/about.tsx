@@ -23,18 +23,18 @@ const About:NextPage = () => {
 			</p>
 			<p>
 				<a href="https://github.com/emilvn/tweemoji"
-					className="text-slate-200 hover:text-slate-500 transition-colors"
+					className="hover:text-slate-500 transition-colors"
 				   target="_blank"
 				>
-					<FaGithub className="inline-block" size={30}/> Tweemoji code repository!
+					<FaGithub className="inline-block text-slate-400" size={30}/> Tweemoji code repository!
 				</a>
 			</p>
 			<p>
 				<a href="https://github.com/emilvn"
-					className="text-slate-200 hover:text-slate-500 transition-colors"
+					className="hover:text-slate-500 transition-colors"
 				   target="_blank"
 				>
-					<FaGithub className="inline-block" size={30}/> Other projects!
+					<FaGithub className="inline-block text-slate-400" size={30}/> Other projects!
 				</a>
 			</p>
 		</div>
