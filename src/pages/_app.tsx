@@ -4,12 +4,14 @@ import { api } from "~/utils/api";
 
 import "~/styles/globals.css";
 import {ClerkProvider} from "@clerk/nextjs";
+import {dark} from "@clerk/themes";
 import {Toaster} from "react-hot-toast";
 import Head from "next/head";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
     return (
-        <ClerkProvider {...pageProps} >
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        <ClerkProvider {...pageProps} appearance={{baseTheme: dark}}>
 			<Head>
 				<title>Tweemoji</title>
 				<meta name="description" content="💭" />
