@@ -16,6 +16,7 @@ const About:NextPage = () => {
 			<p className="mt-2">
 				<a href="https://www.linkedin.com/in/emil-nielsen-48b259266/"
 					className="text-sky-500 hover:text-sky-600 transition-colors"
+				   target="_blank"
 				>
 					<FaLinkedin className="inline-block" size={24}/>
 				</a> Let&apos;s connect!
@@ -23,13 +24,15 @@ const About:NextPage = () => {
 			<p>
 				<a href="https://github.com/emilvn/tweemoji"
 					className="text-slate-200 hover:text-sky-500 transition-colors"
+				   target="_blank"
 				>
 					<FaGithub className="inline-block" size={24}/>
 				</a> Tweemoji code repository!
 			</p>
 			<p>
 				<a href="https://github.com/emilvn"
-					className="text-slate-200 hover:text-sky-300 transition-colors"
+					className="text-slate-200 hover:text-sky-500 transition-colors"
+				   target="_blank"
 				>
 					<FaGithub className="inline-block" size={24}/>
 				</a> Other projects!
