@@ -53,7 +53,7 @@ export const PageLayout = (props: PropsWithChildren) => {
 			<div className="md:w-[180px] w-[97px] h-screen">
 
 			</div>
-			<main className="flex justify-center h-full min-h-screen w-full">
+			<main className="flex justify-center h-full min-h-screen w-full relative">
 				<div className="w-full lg:max-w-2xl border-slate-400 border-x">
 					{props.children}
 				</div>
